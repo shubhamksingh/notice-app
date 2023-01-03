@@ -1,5 +1,6 @@
 import {
   Button,
+  Center,
   FormControl,
   FormHelperText,
   Heading,
@@ -23,16 +24,16 @@ const Form = () => {
       borderColor={colorMode === "dark" && "yellow"}
     >
       <Heading mb="4rem" color={colorMode == "dark" && "teal.200"}>
-        Login
+        <Center>Login</Center>
       </Heading>
       <Text fontSize="2rem" mb="1rem">
-        Pick a username
+        <Center>Pick a username</Center>
       </Text>
       <Input borderColor={colorMode == "dark" && "yellow"} />
       <FormHelperText>
         If new user, Account will be created and automatically logged in.
       </FormHelperText>
-      <Button mt="2rem" colorScheme="teal">
+      <Button colorScheme="teal" display={"block"} m="auto" mt="3rem">
         Login
       </Button>
     </FormControl>
