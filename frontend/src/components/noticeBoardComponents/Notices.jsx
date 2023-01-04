@@ -8,18 +8,18 @@ import { getNotices } from "../../utilis/noticeHelper/getNotices";
 const Notices = ({ updated }) => {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [notices, setNotices] = React.useState([]);
-  const [totalPage, setTotalPage] = React.useState(2);
+  const [totalPage, setTotalPage] = React.useState(0);
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
     getNotices().then(res => {
       let x = res.data.length;
-      res.data = res.data.splice(
+      let newArr = res.data.splice(
         (currentPage - 1) * 4,
         (currentPage - 1) * 4 + 4,
       );
-      setNotices(res.data);
+      setNotices(newArr);
       setTotalPage(Math.ceil(x / 4));
       setLoading(false);
     });

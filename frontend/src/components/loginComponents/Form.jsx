@@ -14,7 +14,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextProvider";
 import { postLogin } from "../../utilis/form/postLogin";
-import { loginError, loginNewUser } from "../../utilis/form/toastObjects";
+import { loginError, loginNewUser, loginOldUser } from "../../utilis/form/toastObjects";
 // import handleSubmit from "../../utilis/form/handleSubmit";
 
 const Form = () => {
@@ -32,7 +32,7 @@ const Form = () => {
         if (res.data.newUser) {
           toast(loginNewUser());
         } else {
-          toast(loginNewUser());
+          toast(loginOldUser());
         }
         login(res.data.user);
         navigate("/noticeBoard");
