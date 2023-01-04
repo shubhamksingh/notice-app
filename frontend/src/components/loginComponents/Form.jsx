@@ -7,11 +7,41 @@ import {
   Input,
   Text,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContextProvider";
+import { postLogin } from "../../utilis/form/postLogin";
+import { loginError, loginNewUser } from "../../utilis/form/toastObjects";
+// import handleSubmit from "../../utilis/form/handleSubmit";
 
 const Form = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
+  const [username, setUsername] = React.useState("");
+  const toast = useToast();
+  const navigate = useNavigate();
+  const { login } = React.useContext(AuthContext);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    postLogin(username)
+      .then(res => {
+        console.log(res);
+        if (res.data.newUser) {
+          toast(loginNewUser());
+        } else {
+          toast(loginNewUser());
+        }
+        login(res.data.user);
+        navigate("/noticeBoard");
+      })
+      .catch(err => {
+        toast(loginError());
+      });
+  };
+
   return (
     <FormControl
       w={{ lg: "40%" }}
@@ -29,11 +59,20 @@ const Form = () => {
       <Text fontSize="2rem" mb="1rem">
         <Center>Pick a username</Center>
       </Text>
-      <Input borderColor={colorMode == "dark" && "yellow"} />
+      <Input
+        borderColor={colorMode == "dark" && "yellow"}
+        onChange={e => setUsername(e.target.value)}
+      />
       <FormHelperText>
         If new user, Account will be created and automatically logged in.
       </FormHelperText>
-      <Button colorScheme="teal" display={"block"} m="auto" mt="3rem">
+      <Button
+        colorScheme="teal"
+        display={"block"}
+        m="auto"
+        mt="3rem"
+        onClick={handleSubmit}
+      >
         Login
       </Button>
     </FormControl>
